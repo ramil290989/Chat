@@ -6,7 +6,6 @@ import * as Yup from 'yup';
 import axios from 'axios';
 import { Button } from 'react-bootstrap';
 import route from '../routes';
-import { actions as channelsActions } from '../slices/channelsSlice.js';
 
 const ErrMes = (props) => {
   return props.err !== null ? <div>{props.err}</div> : null;
@@ -28,26 +27,14 @@ const SignUpForm = () => {
       password: Yup.string()
         .required('Required'),
     }),
-    onSubmit: ({ username, password }) => {
+    onSubmit: async ({ username, password }) => {
       const loginRoute = route.login();
       const loginData = { username, password };
       axios.post(loginRoute, loginData)
-        .then((loginResponse) => {
-          localStorage.setItem('token', loginResponse.data.token);
-          const dataRoute = route.data();
-          const dataConfig = { headers: { Authorization: `Bearer ${loginResponse.data.token}` } };
-          axios.get(dataRoute, dataConfig)
-            .then((dataResponse) => {
-              console.log(dataResponse.data);
-              const { channels, currentChannelId } = dataResponse.data;
-              dispatch(channelsActions.addChannels(channels));
-              dispatch(channelsActions.setCurrentChannelId(currentChannelId));
-            })
-            .catch((er) => console.log('nodata'));
+        .then((response) => {
+          console.log(response.data);
+          localStorage.setItem('token', response.data.token);
           navigate('/');
-        })
-        .catch((e) => {
-          setErrState(e.message);
         });
     },
   });
@@ -79,7 +66,7 @@ const SignUpForm = () => {
       {formik.touched.password && formik.errors.password ? (
         <div>{formik.errors.password}</div>
       ) : null}
-      <Button type="submit" className="btn-primary">Submit</Button>
+      <Button type="submit" className="btn-primary">Submitwww</Button>
       <ErrMes err={errState}/>
     </form>
   );

@@ -1,21 +1,27 @@
-import React from 'react';
+import {
+  Container,
+  Row,
+  Col,
+  Navbar,
+  Button,
+} from 'react-bootstrap';
+import React, { useEffect } from 'react';
 import { Navigate } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
 import axios from 'axios';
+import Channels from './Channels.jsx';
+import Messages from './Messages.jsx';
+import { selectors } from '../slices/channelsSlice.js';
+import { fetchChannels } from '../slices/channelsSlice.js';
 
 const MainPage = () => {
-
-  if (!localStorage.getItem('token')) {
-    return <Navigate to="/login" />
-  }
-
   return (
-    <div>
-      <div className="m-3">This Main Page</div>
-      <div className="m-3">userData</div>
-      <button>диспатч</button>
-      <button onClick={() => localStorage.removeItem('token')}>удалить токен нахуй</button>
-      <button onClick={() => axios.post('/api/v1/signup', { username: 'admin', password: 'admin' })}>admin</button>
-    </div>
+    <Container className="h-100 my-4 overflow-hidden rounded shadow">
+      <div className="row h-100 bg-white flex-md-row">
+        <Channels />
+        <Messages />
+      </div>
+    </Container>
   );
 };
 
