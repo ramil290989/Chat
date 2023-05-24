@@ -32,6 +32,7 @@ const channelsSlice = createSlice({
       })
       .addCase(fetchChannels.fulfilled, (state, action) => {
         channelsAdapter.addMany(state, action.payload.channels);
+        state.currentChannelId = action.payload.currentChannelId;
         state.loadingStatus = 'idle';
         state.error = null;
       })

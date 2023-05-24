@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
@@ -13,7 +12,6 @@ const ErrMes = (props) => {
 
 const SignUpForm = () => {
   const [errState, setErrState] = useState(null);
-  const dispatch = useDispatch();
   const navigate = useNavigate();
   const formik = useFormik({
     initialValues: {

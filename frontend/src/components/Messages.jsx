@@ -1,5 +1,4 @@
-import { Col, Nav, Button } from 'react-bootstrap';
-import cn from 'classnames';
+import React from 'react';
 import dataResponse from '../developmentMode/dataResponse.js';
 
 const Messages = () => {

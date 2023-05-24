@@ -1,8 +1,19 @@
-import { Col, Nav, Button } from 'react-bootstrap';
+import React from 'react';
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import cn from 'classnames';
-import dataResponse from '../developmentMode/dataResponse.js';
+import { fetchChannels, selectors } from '../slices/channelsSlice.js';
 
 const Channels = () => {
+  const dispatch = useDispatch();
+  const token = localStorage.getItem('token');
+  useEffect(() => {
+    dispatch(fetchChannels(token));
+  });
+  const channels = useSelector(selectors.selectAll);
+  const currentChannelId = useSelector((state) => state.channels.currentChannelId);
+  console.log(channels);
+  console.log(currentChannelId);
   return (
     <div className="col-4 col-md-2 border-end px-0 bg-light flex-column h-100 d-flex">
       <div className="d-flex mt-1 justify-content-between mb-2 ps-4 pe-2 p-4">
@@ -16,9 +27,9 @@ const Channels = () => {
         </button>
       </div>
       <ul className="nav flex-column nav-pills nav-fill px-2 mb-3 overflow-auto h-100 d-block">
-        {dataResponse.channels.map((channel) => (
+        {channels.map((channel) => (
           <li className="nav-item w-100" key={channel.id}>
-            <button className={cn('w-100', 'rounded-0', 'text-start', 'btn', {'btn-secondary': dataResponse.currentChannelId === channel.id})}>
+            <button className={cn('w-100', 'rounded-0', 'text-start', 'btn', {'btn-secondary': currentChannelId === channel.id})}>
               <span class="me-1">#</span>
               {channel.name}
             </button>
