@@ -10,7 +10,10 @@ const HeaderNav = () => {
       <Navbar.Collapse className="justify-content-end">
         <Button
           variant="primary"
-          onClick={() => localStorage.removeItem('token')}
+          onClick={() => {
+            localStorage.removeItem('token');
+            localStorage.removeItem('username');
+          }}
         >
           Выйти
         </Button>

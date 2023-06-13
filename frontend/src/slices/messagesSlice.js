@@ -1,12 +1,10 @@
 import { createSlice, createEntityAdapter } from '@reduxjs/toolkit';
-import _ from 'lodash';
 import { fetchChannels } from './channelsSlice.js';
+import { actions as channelsActions } from './channelsSlice.js';
 
 const messagesAdapter = createEntityAdapter();
 
-const initialState = messagesAdapter.getInitialState({
-  currentChannel: {},
-});
+const initialState = messagesAdapter.getInitialState({});
 
 const messagesSlice = createSlice({
   name: 'messages',
@@ -18,7 +16,11 @@ const messagesSlice = createSlice({
     builder
       .addCase(fetchChannels.fulfilled, (state, action) => {
         messagesAdapter.addMany(state, action.payload.messages);
-        state.currentChannel = _.find(action.payload.channels, function(channel) { return channel.id === action.payload.currentChannelId});
+      })
+      .addCase(channelsActions.removeChannel, (state, action) => {
+        const removeChannelId = action.payload.id;
+        const notRemoveMessages = Object.values(state.entities).filter((message) => message.channelId !== removeChannelId);
+        messagesAdapter.setAll(state, notRemoveMessages);
       })
   },
 });

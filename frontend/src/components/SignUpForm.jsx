@@ -30,7 +30,7 @@ const SignUpForm = () => {
       const loginData = { username, password };
       axios.post(loginRoute, loginData)
         .then((response) => {
-          console.log(response.data);
+          localStorage.setItem('username', response.data.username);
           localStorage.setItem('token', response.data.token);
           navigate('/');
         });

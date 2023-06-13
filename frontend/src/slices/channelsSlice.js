@@ -1,5 +1,6 @@
 import { createSlice, createEntityAdapter, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
+import _ from 'lodash';
 import route from '../routes.js';
 
 export const fetchChannels = createAsyncThunk(
@@ -15,7 +16,8 @@ export const fetchChannels = createAsyncThunk(
 const channelsAdapter = createEntityAdapter();
 
 const initialState = channelsAdapter.getInitialState({
-  currentChannelId: null,
+  currentChannel: {},
+  defaultChannel: {},
   loadingStatus: 'idle',
   error: null,
 });
@@ -23,7 +25,19 @@ const initialState = channelsAdapter.getInitialState({
 const channelsSlice = createSlice({
   name: 'channels',
   initialState,
-  reducers: {},
+  reducers: {
+    addChannel: channelsAdapter.addOne,
+    renameChannel: channelsAdapter.upsertOne,
+    removeChannel: (state, { payload }) => {
+      channelsAdapter.removeOne(state, payload.id);
+      if (state.currentChannel.id === payload.id) {
+        state.currentChannel = state.defaultChannel;
+      }
+    },
+    changeCurrentChannel: (state, { payload }) => {
+      state.currentChannel = payload;
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(fetchChannels.pending, (state) => {
@@ -32,7 +46,8 @@ const channelsSlice = createSlice({
       })
       .addCase(fetchChannels.fulfilled, (state, action) => {
         channelsAdapter.addMany(state, action.payload.channels);
-        state.currentChannelId = action.payload.currentChannelId;
+        state.currentChannel = _.find(action.payload.channels, (channel) => channel.id === action.payload.currentChannelId);
+        state.defaultChannel = state.currentChannel;
         state.loadingStatus = 'idle';
         state.error = null;
       })
