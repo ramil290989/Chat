@@ -12,12 +12,13 @@ import { actions as messagesActions } from '../slices/messagesSlice.js';
 import HeaderNav from './HeaderNav.jsx';
 import PageNotFound from './PageNotFound.jsx';
 import MainPage from './MainPage.jsx'
-import SignUpForm from './SignUpForm.jsx';
+import LogIn from './LogIn.jsx';
+import SignUp from './SignUp.jsx';
 
 const App = () => {
   const { username, token } = localStorage;
   const socket = io("ws://localhost:5001");
-  const [data] = useState({ username, token, socket });
+  const [data, setData] = useState({ username, token, socket });
   const dispatch = useDispatch();
   
   useEffect(() => {
@@ -37,14 +38,15 @@ const App = () => {
   }, []);
 
   return (
-    <ContextData.Provider value={[data]}>
+    <ContextData.Provider value={[data, setData]}>
       <div className="d-flex flex-column h-100">
         <HeaderNav />
         <BrowserRouter>
           <Routes>
             <Route path="*" element={<PageNotFound />} />
             <Route path="" element={<MainPage />} />
-            <Route path="login" element={<SignUpForm />} />
+            <Route path="login" element={<LogIn />} />
+            <Route path="signup" element={<SignUp />} />
           </Routes>
         </BrowserRouter>
       </div>
