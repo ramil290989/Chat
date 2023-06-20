@@ -6,6 +6,9 @@ import socket from '../socket.js';
 import { selectors as messagesSelectors } from '../slices/messagesSlice.js';
 import { AuthorizationData } from '../contexts/AuthorizationData.js';
 
+var filter = require("leo-profanity");
+filter.getDictionary('ru');
+
 const Messages = () => {
   const [authorizationData] = useContext(AuthorizationData);
   const { username } = authorizationData;
@@ -40,9 +43,10 @@ const Messages = () => {
         <div className="mt-auto px-5 py-3">
           <Formik
             initialValues={{
-              body: '',
+              messageBody: '',
             }}
-            onSubmit={({ body }, formikBag) => {
+            onSubmit={({ messageBody }, formikBag) => {
+              const body = filter.clean(messageBody);
               socket.emit('newMessage', { body, channelId: currentChannel.id, username });
               formikBag.resetForm();
             }}
@@ -52,13 +56,13 @@ const Messages = () => {
                 <div className="input-group has-validation">
                   <input
                     ref={messageInput}
-                    id="body"
-                    name="body"
+                    id="messageBody"
+                    name="messageBody"
                     type="text"
                     className="border-0 p-0 ps-2 form-control"
                     placeholder={t('inputs.message.placeholder')}
                     onChange={formProps.handleChange}
-                    value={formProps.values.body}
+                    value={formProps.values.messageBody}
                   />
                   <button type="submit" className="btn btn-group-vertical" disabled="">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="20" height="20" fill="currentColor">

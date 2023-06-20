@@ -11,6 +11,11 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import store from './slices/index.js';
 import App from './components/App.jsx';
 
+var leoProfanity = require('leo-profanity');
+var russianBadwordsList = require('russian-bad-words');
+leoProfanity.clearList();
+leoProfanity.add(russianBadwordsList.flatWords);
+
 const init = async () => {
   await i18n
     .use(initReactI18next)
