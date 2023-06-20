@@ -13,8 +13,13 @@ import store from './slices/index.js';
 import App from './components/App.jsx';
 
 const rollbarConfig = {
-  accessToken: 'be7e68eba95541f08efd129802e02c1e',
+  accessToken: '881a188e6cb04e7dba37d813f59c6b19',
   environment: 'testenv',
+};
+
+const TestError = () => {
+  const a = null;
+  return a.hello();
 };
 
 var leoProfanity = require('leo-profanity');
@@ -47,6 +52,7 @@ const init = async () => {
   return (
     <RollbarProvider config={rollbarConfig}>
       <ErrorBoundary>
+        <TestError />
         <Provider store={store}>
           <App />
         </Provider>
