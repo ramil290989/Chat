@@ -1,6 +1,7 @@
 import React, { useContext, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
+import { toast } from 'react-toastify';
 import Channels from './Channels.jsx';
 import Messages from './Messages.jsx';
 import { AuthorizationData } from '../contexts/AuthorizationData.js';
@@ -10,6 +11,8 @@ const MainPage = () => {
   const dispatch = useDispatch();
 
   const { t } = useTranslation();
+
+  const notify = (errorMessage) => toast.error(errorMessage);
 
   const loadingStatus = useSelector((state) => state.channels.loadingStatus);
   const [authorizationData] = useContext(AuthorizationData);
@@ -29,6 +32,7 @@ const MainPage = () => {
   }
 
   if (loadingStatus === 'failed') {
+    notify(t('errors.connectionError'));
     return (
       <div className="text-center">
         <h1 class="h4 text-muted">{t('loadingStatus.failed')}</h1>

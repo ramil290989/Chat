@@ -6,6 +6,7 @@ import socket from './socket.js';
 import { actions as channelsActions } from './slices/channelsSlice.js';
 import { actions as messagesActions } from './slices/messagesSlice.js';
 import resources from './locales';
+import 'react-toastify/dist/ReactToastify.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import store from './slices/index.js';
 import App from './components/App.jsx';

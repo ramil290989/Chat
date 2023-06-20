@@ -5,6 +5,7 @@ import * as Yup from 'yup';
 import cn from 'classnames';
 import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
+import { toast } from 'react-toastify';
 import socket from "../../socket";
 
 const AddChannelModal = (props) => {
@@ -12,6 +13,8 @@ const AddChannelModal = (props) => {
   const dispatch = useDispatch();
 
   const { t } = useTranslation();
+
+  const notify = () => toast.success(t('toastifyNotify.channelRenamed'));
 
   return (
     <Modal
@@ -39,6 +42,7 @@ const AddChannelModal = (props) => {
           onSubmit={({ renameChannelName }) => {
             socket.emit('renameChannel', { id: renameChannelId, name: renameChannelName });
             onHide();
+            notify();
           }}
         >
           {(formProps) => (

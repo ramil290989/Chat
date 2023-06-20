@@ -5,6 +5,7 @@ import * as Yup from 'yup';
 import cn from 'classnames';
 import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
+import { toast } from 'react-toastify';
 import { actions } from '../../slices/channelsSlice.js';
 import socket from "../../socket.js";
 
@@ -13,6 +14,8 @@ const AddChannelModal = (props) => {
   const dispatch = useDispatch();
 
   const { t } = useTranslation();
+
+  const notify = () => toast.success(t('toastifyNotify.channelAdded'));
 
   return (
     <Modal
@@ -43,6 +46,7 @@ const AddChannelModal = (props) => {
               dispatch(actions.changeCurrentChannel(payload));
             });
             onHide();
+            notify();
           }}
         >
           {(formProps) => (

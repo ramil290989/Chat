@@ -4,6 +4,7 @@ import {
   Route,
 } from 'react-router-dom';
 import React, { useState } from 'react';
+import { ToastContainer } from 'react-toastify';
 import { AuthorizationData } from '../contexts/AuthorizationData.js';
 import HeaderNav from './HeaderNav.jsx';
 import PageNotFound from './PageNotFound.jsx';
@@ -27,6 +28,7 @@ const App = () => {
             <Route path="signup" element={<SignUp />} />
           </Routes>
         </BrowserRouter>
+        <ToastContainer autoClose={2000} />
       </div>
     </AuthorizationData.Provider>
   );

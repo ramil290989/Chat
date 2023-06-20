@@ -5,6 +5,7 @@ import { Formik } from 'formik';
 import axios from 'axios';
 import { Container, Row, Col, Card, Image, Form, Button } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
+import { toast } from 'react-toastify';
 import logInImage from '../img/logIn.jpeg';
 import route from '../routes';
 import { AuthorizationData } from '../contexts/AuthorizationData.js';
@@ -17,11 +18,14 @@ const LogIn = () => {
 
   const { t } = useTranslation();
 
+  const notify = (errorMessage) => toast.error(errorMessage);
+
   const [authorizationData, setAuthorizationData] = useContext(AuthorizationData);
 
   const [isDisabled, setIsDisabled] = useState(false);
   const [netError, setNetError] = useState(null);
-  const navigate = useNavigate();
+  const navigate = useNavigate();  
+
   return (
     <Container fluid className="h-100">
       <Row className="justify-content-center align-content-center h-100">
@@ -50,9 +54,13 @@ const LogIn = () => {
                       navigate('/');
                     })
                     .catch((error) => {
-                      const netErrorMessage = error.response.status === 401 ? t('errors.401') : t('errors.connectionError');
-                      setNetError(netErrorMessage);
-                      setIsDisabled(false);
+                      if (error.response.status === 401) {
+                        setNetError(t('errors.401'));
+                        setIsDisabled(false);
+                      } else {
+                        notify(t('errors.connectionError'));
+                        setIsDisabled(false);
+                      }
                     });
                 }}
               >

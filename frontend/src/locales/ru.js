@@ -1,5 +1,10 @@
 export default {
   translation: {
+    toastifyNotify: {
+      channelAdded: 'Канал создан',
+      channelRenamed: 'Канал переименован',
+      channelRemoved: 'Канал удален',
+    },
     headers: {
       headerNav: 'Hexlet Chat',
       login: 'Войти',
