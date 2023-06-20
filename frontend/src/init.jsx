@@ -6,10 +6,16 @@ import socket from './socket.js';
 import { actions as channelsActions } from './slices/channelsSlice.js';
 import { actions as messagesActions } from './slices/messagesSlice.js';
 import resources from './locales';
+import { Provider as RollbarProvider, ErrorBoundary } from '@rollbar/react';
 import 'react-toastify/dist/ReactToastify.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import store from './slices/index.js';
 import App from './components/App.jsx';
+
+const rollbarConfig = {
+  accessToken: 'be7e68eba95541f08efd129802e02c1e',
+  environment: 'testenv',
+};
 
 var leoProfanity = require('leo-profanity');
 var russianBadwordsList = require('russian-bad-words');
@@ -39,9 +45,13 @@ const init = async () => {
   });
 
   return (
-    <Provider store={store}>
-      <App />
-    </Provider>
+    <RollbarProvider config={rollbarConfig}>
+      <ErrorBoundary>
+        <Provider store={store}>
+          <App />
+        </Provider>
+      </ErrorBoundary>
+    </RollbarProvider>
   );
 }
 
