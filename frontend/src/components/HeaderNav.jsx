@@ -1,23 +1,26 @@
-import React, { useContext, useEffect, useRef } from 'react';
+import React, { useContext } from 'react';
 import { Navbar, Container, Button } from 'react-bootstrap';
-import { ContextData } from '../contexts/ContextData.js';
+import { useTranslation } from 'react-i18next';
+import { AuthorizationData } from '../contexts/AuthorizationData.js';
 
 const HeaderNav = () => {
-  const [data, setData] = useContext(ContextData);
+  const [authorizationData, setAuthorizationData] = useContext(AuthorizationData);
+  const { t } = useTranslation();
+  
   return (
     <Navbar className="shadow-sm bg-white" expand="lg">
     <Container>
-      <Navbar.Brand href="/">Hexlet Chat</Navbar.Brand>
-      {data ? (
+      <Navbar.Brand href="/">{t('headers.headerNav')}</Navbar.Brand>
+      {authorizationData.token ? (
         <Button
           variant="primary"
           onClick={() => {
             localStorage.removeItem('token');
             localStorage.removeItem('username');
-            setData({ username: null, token: null, socket: null });
+            setAuthorizationData({ username: null, token: null });
           }}
         >        
-          Выйти
+          {t('buttons.logOut')}
         </Button>
       ) : null}
     </Container>

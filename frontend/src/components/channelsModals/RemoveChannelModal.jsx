@@ -1,14 +1,16 @@
 import React from "react";
 import { Modal, Button } from "react-bootstrap";
-import { io } from 'socket.io-client';
+import { useTranslation } from 'react-i18next';
+import socket from "../../socket.js";
 
 const RemoveChannelModal = (props) => {
-  const { show, onHide, removeChannelId } = props
-  const socket = io("ws://localhost:5001");
+  const { show, onHide, removeChannelId } = props;
   const removeChannel = (channelId) => {
     socket.emit('removeChannel', { id: channelId });
     onHide();
   };
+
+  const { t } = useTranslation();
 
   return (
     <Modal
@@ -18,14 +20,14 @@ const RemoveChannelModal = (props) => {
     >
       <Modal.Header closeButton>
         <Modal.Title>
-          Удалить канал
+          {t('headers.removeChannel')}
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <p class="lead">Уверены?</p>
+        <p class="lead">{t('titles.sure')}</p>
         <div class="d-flex justify-content-end">
-          <Button variant="secondary" className="me-2" onClick={() => onHide()}>Отменить</Button>
-          <Button variant="danger" onClick={() => removeChannel(removeChannelId)}>Удалить</Button>
+          <Button variant="secondary" className="me-2" onClick={() => onHide()}>{t('buttons.cancel')}</Button>
+          <Button variant="danger" onClick={() => removeChannel(removeChannelId)}>{t('buttons.remove')}</Button>
         </div>
       </Modal.Body>
     </Modal>

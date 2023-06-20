@@ -18,7 +18,7 @@ const channelsAdapter = createEntityAdapter();
 const initialState = channelsAdapter.getInitialState({
   currentChannel: {},
   defaultChannel: {},
-  loadingStatus: 'idle',
+  loadingStatus: 'loading',
   error: null,
 });
 

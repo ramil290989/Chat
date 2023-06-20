@@ -1,18 +1,24 @@
-import React, {useState, useEffect, useRef} from 'react';
+import React, {useState, useEffect, useRef, useContext} from 'react';
 import { useNavigate } from 'react-router-dom';
 import cn from 'classnames';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 import axios from 'axios';
 import { Container, Row, Col, Card, Image, Form, Button } from 'react-bootstrap';
+import { useTranslation } from 'react-i18next';
 import signUpImage from '../img/signUp.jpg';
 import route from '../routes';
+import { AuthorizationData } from '../contexts/AuthorizationData.js';
 
 const SignUp = () => {
   const usernameInput = useRef(null);
   useEffect(() => {
     usernameInput.current.focus();
   });
+
+  const { t } = useTranslation();
+
+  const [authorizationData, setAuthorizationData] = useContext(AuthorizationData);
 
   const [isDisabled, setIsDisabled] = useState(false);
   const [netError, setNetError] = useState(null);
@@ -34,15 +40,15 @@ const SignUp = () => {
                 }}
                 validationSchema={Yup.object({
                   username: Yup.string()
-                    .min(3, 'От 3 до 20 символов')
-                    .max(20, 'От 3 до 20 символов')
-                    .required('Обязательное поле'),
+                    .min(3, t('validations.min3'))
+                    .max(20, t('validations.max20'))
+                    .required(t('validations.required')),
                   password: Yup.string()
-                    .min(6, 'Не менее 6 символов')
-                    .required('Обязательное поле'),
+                    .min(6, t('validations.min6'))
+                    .required(t('validations.required')),
                   confirmPassword: Yup.string()
-                    .oneOf([Yup.ref('password'), null], 'Пароли должны совпадать')
-                    .required('Обязательное поле'),
+                    .oneOf([Yup.ref('password'), null], t('validations.oneOf'))
+                    .required(t('validations.required')),
                 })}
                 onSubmit={async ({ username, password }) => {
                   setIsDisabled(true);
@@ -52,10 +58,12 @@ const SignUp = () => {
                     .then((response) => {
                       localStorage.setItem('username', response.data.username);
                       localStorage.setItem('token', response.data.token);
+                      setAuthorizationData({ token: response.data.token, username: response.data.username });
+                      setIsDisabled(false);
                       navigate('/');
                     })
                     .catch((error) => {
-                      const netErrorMessage = error.response.status === 409 ? 'Такой пользователь уже существует' : 'Ошибка соединения';
+                      const netErrorMessage = error.response.status === 409 ? t('errors.409') : t('errors.connectionError');
                       setNetError(netErrorMessage);
                       setIsDisabled(false);
                     });
@@ -63,14 +71,14 @@ const SignUp = () => {
               >
                 {(formProps) => (
                   <Form onSubmit={formProps.handleSubmit} className="col-12 col-md-6 mt-3 mt-mb-0">
-                    <h1 class="text-center mb-4">Регистрация</h1>
-                      <Form.FloatingLabel className="mb-3" htmlFor="username" label="Имя пользователя">
+                    <h1 class="text-center mb-4">{t('headers.signUp')}</h1>
+                      <Form.FloatingLabel className="mb-3" htmlFor="username" label={t('inputs.username.label')}>
                         <Form.Control
                           ref={usernameInput}
                           id="username"
                           name="username"
                           type="text"
-                          placeholder="Имя пользователя"
+                          placeholder={t('inputs.username.placeholder')}
                           required
                           disabled={isDisabled}
                           onChange={formProps.handleChange}
@@ -82,12 +90,12 @@ const SignUp = () => {
                           <div className="invalid-tooltip">{formProps.errors.username}</div>
                         ) : null}
                     </Form.FloatingLabel>
-                    <Form.FloatingLabel className="mb-4" htmlFor="password" label="Пароль">
+                    <Form.FloatingLabel className="mb-4" htmlFor="password" label={t('inputs.password.label')}>
                         <Form.Control
                           id="password"
                           name="password"
                           type="password"
-                          placeholder="Пароль"
+                          placeholder={t('inputs.password.placeholder')}
                           required
                           disabled={isDisabled}
                           onChange={formProps.handleChange}
@@ -99,12 +107,12 @@ const SignUp = () => {
                           <div className="invalid-tooltip">{formProps.errors.password}</div>
                         ) : null}
                     </Form.FloatingLabel>
-                    <Form.FloatingLabel className="mb-4" htmlFor="confirmPassword" label="Подтвердите пароль">
+                    <Form.FloatingLabel className="mb-4" htmlFor="confirmPassword" label={t('inputs.confirmPassword.label')}>
                         <Form.Control
                           id="confirmPassword"
                           name="confirmPassword"
                           type="password"
-                          placeholder="Подтвердите пароль"
+                          placeholder={t('inputs.confirmPassword.placeholder')}
                           required
                           disabled={isDisabled}
                           onChange={formProps.handleChange}
@@ -122,7 +130,7 @@ const SignUp = () => {
                       className="w-100 mb-3"
                       disabled={isDisabled}
                     >
-                      Зарегистрироваться
+                      {t('buttons.signUp')}
                     </Button>
                   </Form>
                 )}

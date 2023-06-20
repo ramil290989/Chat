@@ -1,22 +1,25 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Col, Button, ButtonGroup, Dropdown } from 'react-bootstrap';
+import { useTranslation } from 'react-i18next';
 import { actions, selectors } from '../slices/channelsSlice.js';
 import AddChannelModal from './channelsModals/AddChannelModal.jsx';
 import RemoveChannelModal from './channelsModals/RemoveChannelModal.jsx';
 import RenameChannelModal from './channelsModals/RenameChannelModal.jsx';
 
 const Channels = () => {
+  const dispatch = useDispatch();
+
+  const { t } = useTranslation();
+
   const channels = useSelector(selectors.selectAll);
   const channelNames = channels.map((channel) => channel.name);
   const currentChannel = useSelector((state) => state.channels.currentChannel);
 
-  const [addChannelModalShow, setAddChannelModalShow] = React.useState(false);
-  const [removeChannelModalProps, setRemoveChannelModalProps] = React.useState(false);
-  const [renameChannelModalProps, setRenameChannelModalProps] = React.useState(false);
-  
-  const dispatch = useDispatch();
-  
+  const [addChannelModalShow, setAddChannelModalShow] = useState(false);
+  const [removeChannelModalProps, setRemoveChannelModalProps] = useState(false);
+  const [renameChannelModalProps, setRenameChannelModalProps] = useState(false);
+    
   const ChannelButton = ({ channel }) => {
     const NotRemovable = (
       <Button
@@ -47,8 +50,8 @@ const Channels = () => {
           id="dropdown-split-basic"
         />
         <Dropdown.Menu>
-          <Dropdown.Item href="#" onClick={() => setRemoveChannelModalProps({ show: true, id: channel.id })}>Удалить</Dropdown.Item>
-          <Dropdown.Item href="#" onClick={() => setRenameChannelModalProps({ show: true, id: channel.id, name: channel.name })}>Переименовать</Dropdown.Item>
+          <Dropdown.Item href="#" onClick={() => setRemoveChannelModalProps({ show: true, id: channel.id })}>{t('buttons.remove')}</Dropdown.Item>
+          <Dropdown.Item href="#" onClick={() => setRenameChannelModalProps({ show: true, id: channel.id, name: channel.name })}>{t('buttons.rename')}</Dropdown.Item>
         </Dropdown.Menu>
       </Dropdown>
     )
@@ -59,7 +62,7 @@ const Channels = () => {
     <>
     <Col md={2} xs={4} className="border-end px-0 bg-light flex-column h-100 d-flex">
       <div className="d-flex mt-1 justify-content-between mb-2 ps-4 pe-2 p-4">
-        <b>Каналы</b>
+        <b>{t('titles.channels')}</b>
         <button
           type="button" className="p-0 text-primary btn btn-group-vertical"
           onClick={() => setAddChannelModalShow(true)}

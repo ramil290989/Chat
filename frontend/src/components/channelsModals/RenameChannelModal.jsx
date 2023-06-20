@@ -2,14 +2,16 @@ import React from "react";
 import { Modal } from "react-bootstrap";
 import { Formik } from 'formik';
 import * as Yup from 'yup';
-import {io} from 'socket.io-client';
 import cn from 'classnames';
 import { useDispatch } from 'react-redux';
+import { useTranslation } from 'react-i18next';
+import socket from "../../socket";
 
 const AddChannelModal = (props) => {
   const { show, onHide, channelNames, renameChannelId, renameChannelName } = props;
   const dispatch = useDispatch();
-  const socket = io("ws://localhost:5001");
+
+  const { t } = useTranslation();
 
   return (
     <Modal
@@ -19,7 +21,7 @@ const AddChannelModal = (props) => {
     >
       <Modal.Header closeButton>
         <Modal.Title>
-          Переименовать канал
+          {t('headers.renameChannel')}
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
@@ -29,10 +31,10 @@ const AddChannelModal = (props) => {
           }}
           validationSchema={Yup.object({
             renameChannelName: Yup.string()
-              .min(3, 'От 3 до 20 символов')
-              .max(20, 'От 3 до 20 символов')
-              .notOneOf(channelNames, 'Должно быть уникальным')
-              .required('Обязательное поле'),
+              .min(3, t('validations.min3'))
+              .max(20, t('validations.max20'))
+              .notOneOf(channelNames, t('validations.notOneOf'))
+              .required(t('validations.required')),
           })}
           onSubmit={({ renameChannelName }) => {
             socket.emit('renameChannel', { id: renameChannelId, name: renameChannelName });
@@ -53,8 +55,8 @@ const AddChannelModal = (props) => {
                 />
                 <div className="invalid-feedback">{formProps.errors.renameChannelName}</div>
                 <div className="d-flex justify-content-end">
-                  <button className="me-2 btn btn-secondary" onClick={() => onHide()}>Отменить</button>
-                  <button type="submit" className="btn btn-primary">Отправить</button>
+                  <button className="me-2 btn btn-secondary" onClick={() => onHide()}>{t('buttons.cancel')}</button>
+                  <button type="submit" className="btn btn-primary">{t('buttons.send')}</button>
                 </div>
               </div>
             </form>
