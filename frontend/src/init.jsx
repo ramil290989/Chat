@@ -6,20 +6,19 @@ import socket from './socket.js';
 import { actions as channelsActions } from './slices/channelsSlice.js';
 import { actions as messagesActions } from './slices/messagesSlice.js';
 import resources from './locales';
-import { Provider as RollbarProvider, ErrorBoundary } from '@rollbar/react';
+import { Provider as RollbarProvider, ErrorBoundary, LEVEL_WARN } from '@rollbar/react';
 import 'react-toastify/dist/ReactToastify.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import store from './slices/index.js';
 import App from './components/App.jsx';
 
 const rollbarConfig = {
-  accessToken: '881a188e6cb04e7dba37d813f59c6b19',
-  environment: 'testenv',
-};
-
-const TestError = () => {
-  const a = null;
-  return a.hello();
+  accessToken: 'fe5326e87ba64a50a587c0b31fd4f69c',
+  captureUncaught: true,
+  captureUnhandledRejections: true,
+  payload: {
+    environment: 'production',
+  },
 };
 
 var leoProfanity = require('leo-profanity');
@@ -51,8 +50,7 @@ const init = async () => {
 
   return (
     <RollbarProvider config={rollbarConfig}>
-      <ErrorBoundary>
-        <TestError />
+       <ErrorBoundary level={LEVEL_WARN} fallbackUI={ErrorDisplay}>
         <Provider store={store}>
           <App />
         </Provider>
