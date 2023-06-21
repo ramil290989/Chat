@@ -11,7 +11,7 @@ import PageNotFound from './PageNotFound.jsx';
 import MainPage from './MainPage.jsx'
 import LogIn from './LogIn.jsx';
 import SignUp from './SignUp.jsx';
-import { Provider as RollbarProvider, ErrorBoundary, LEVEL_WARN } from '@rollbar/react';
+import { Provider, ErrorBoundary, LEVEL_WARN } from '@rollbar/react';
 
 const rollbarConfig = {
   accessToken: 'fe5326e87ba64a50a587c0b31fd4f69c',
@@ -22,9 +22,13 @@ const rollbarConfig = {
   },
 };
 
-function TestError() {
-  const a = null;
-  return a.hello();
+function ErrorDisplay({ error, resetError }) {
+  return (
+    <div>
+      {`ошибочка: ${error.message}`}
+      <button type="button" onClick={() => resetError()}>Сброс</button>
+    </div>
+  );
 }
 
 const App = () => {
