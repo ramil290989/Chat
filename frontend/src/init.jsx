@@ -14,12 +14,13 @@ import App from './components/App.jsx';
 
 const rollbarConfig = {
   accessToken: 'fe5326e87ba64a50a587c0b31fd4f69c',
-  captureUncaught: true,
-  captureUnhandledRejections: true,
-  payload: {
-    environment: 'production',
-  },
+  environment: 'testenv',
 };
+
+function TestError() {
+  const a = null;
+  return a.hello();
+}
 
 var leoProfanity = require('leo-profanity');
 var russianBadwordsList = require('russian-bad-words');
@@ -52,6 +53,7 @@ const init = async () => {
     <RollbarProvider config={rollbarConfig}>
        <ErrorBoundary level={LEVEL_WARN} fallbackUI={ErrorDisplay}>
         <Provider store={store}>
+          <TestError />
           <App />
         </Provider>
       </ErrorBoundary>
