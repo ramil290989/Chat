@@ -29,7 +29,7 @@ function ErrorDisplay({ error, resetError }) {
       <button type="button" onClick={() => resetError()}>Сброс</button>
     </div>
   );
-}
+};
 
 const App = () => {
   const { username, token } = localStorage;

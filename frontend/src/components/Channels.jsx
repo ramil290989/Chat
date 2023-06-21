@@ -41,7 +41,7 @@ const Channels = () => {
             dispatch(actions.changeCurrentChannel(channel));
           }}
         >
-          <span className="me-1">#</span>{channel.name}
+          <span className="me-1">#</span>{channel}
         </Button>
         <Dropdown.Toggle
           split
