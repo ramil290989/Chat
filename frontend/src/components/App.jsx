@@ -11,7 +11,7 @@ import PageNotFound from './PageNotFound.jsx';
 import MainPage from './MainPage.jsx'
 import LogIn from './LogIn.jsx';
 import SignUp from './SignUp.jsx';
-import { Provider, ErrorBoundary, LEVEL_WARN } from '@rollbar/react';
+import { Provider, ErrorBoundary, LEVEL_ERROR, LEVEL_WARN, LEVEL_INFO } from '@rollbar/react';
 
 const rollbarConfig = {
   accessToken: 'fe5326e87ba64a50a587c0b31fd4f69c',
@@ -37,7 +37,7 @@ const App = () => {
   
   return (
     <Provider config={rollbarConfig}>
-      <ErrorBoundary level={LEVEL_WARN} fallbackUI={ErrorDisplay}>
+      <ErrorBoundary level={LEVEL_ERROR || LEVEL_WARN || LEVEL_INFO} fallbackUI={ErrorDisplay}>
         <AuthorizationData.Provider value={[authorizationData, setAuthorizationData]}>
           <div className="d-flex flex-column h-100">
             <HeaderNav />
