@@ -2,7 +2,7 @@ import React from "react";
 import { Modal, Button } from "react-bootstrap";
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
-import socket from "../../initSocket.js";
+import { socketEvents } from "../../initSocket";
 
 const RemoveChannelModal = (props) => {
   const { show, onHide, removeChannelId } = props;
@@ -10,7 +10,7 @@ const RemoveChannelModal = (props) => {
   const notify = () => toast.success(t('toastifyNotify.channelRemoved'));
 
   const removeChannel = (channelId) => {
-    socket.emit('removeChannel', { id: channelId });
+    socketEvents.removeChannel({ id: channelId });
     onHide();
     notify();
   };
