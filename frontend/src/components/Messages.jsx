@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import { Formik } from 'formik';
 import { useTranslation } from 'react-i18next';
-import socket from '../socket.js';
+import { socketEvents } from '../initSocket.js';
 import { selectors as messagesSelectors } from '../slices/messagesSlice.js';
 import { AuthorizationData } from '../contexts/AuthorizationData.js';
 
@@ -47,7 +47,7 @@ const Messages = () => {
             }}
             onSubmit={({ messageBody }, formikBag) => {
               const body = filter.clean(messageBody);
-              socket.emit('newMessage', { body, channelId: currentChannel.id, username });
+              socketEvents.newMessage({ body, channelId: currentChannel.id, username });
               formikBag.resetForm();
             }}
           >

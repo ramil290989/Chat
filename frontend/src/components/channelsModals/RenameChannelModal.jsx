@@ -6,7 +6,7 @@ import cn from 'classnames';
 import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
-import socket from "../../socket";
+import socket from "../../initSocket";
 
 const AddChannelModal = (props) => {
   const { show, onHide, channelNames, renameChannelId, renameChannelName } = props;

@@ -2,7 +2,7 @@ import React from "react";
 import { Modal, Button } from "react-bootstrap";
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
-import socket from "../../socket.js";
+import socket from "../../initSocket.js";
 
 const RemoveChannelModal = (props) => {
   const { show, onHide, removeChannelId } = props;
