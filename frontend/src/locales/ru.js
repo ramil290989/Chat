@@ -1,4 +1,4 @@
-export default {
+const ru = {
   translation: {
     toastifyNotify: {
       channelAdded: 'Канал создан',
@@ -80,3 +80,5 @@ export default {
     },
   },
 };
+
+export default ru;
