@@ -26,7 +26,7 @@ const MainPage = () => {
       return <Chat />;
     default:
       throw new Error();
-  };
+  }
 };
 
 export default MainPage;

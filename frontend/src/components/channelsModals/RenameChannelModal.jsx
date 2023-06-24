@@ -1,10 +1,12 @@
-import React from "react";
-import { Modal } from "react-bootstrap";
+import React from 'react';
+import { Modal } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
-import RenameChannelForm from "../forms/RenameChannelForm";
+import RenameChannelForm from '../forms/RenameChannelForm';
 
 const RenameChannelModal = (props) => {
-  const { show, onHide, channelNames, renameChannelId, renameChannelName } = props;
+  const {
+    show, onHide, channelNames, renameChannelId, renameChannelName,
+  } = props;
 
   const { t } = useTranslation();
 
@@ -29,6 +31,6 @@ const RenameChannelModal = (props) => {
       </Modal.Body>
     </Modal>
   );
-}
+};
 
 export default RenameChannelModal;

@@ -1,4 +1,6 @@
-import React, {useState, useEffect, useRef, useContext} from 'react';
+import React, {
+  useState, useEffect, useRef, useContext,
+} from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Formik } from 'formik';
@@ -68,58 +70,58 @@ const SignUpForm = () => {
     >
       {(formProps) => (
         <Form onSubmit={formProps.handleSubmit} className="col-12 col-md-6 mt-3 mt-mb-0">
-          <h1 class="text-center mb-4">{t('headers.signUp')}</h1>
-            <Form.FloatingLabel className="mb-3" htmlFor="username" label={t('inputs.username.label')}>
-              <Form.Control
-                ref={usernameInput}
-                id="username"
-                name="username"
-                type="text"
-                placeholder={t('inputs.username.placeholder')}
-                required
-                disabled={isDisabled}
-                onChange={formProps.handleChange}
-                onBlur={formProps.handleBlur}
-                value={formProps.values.username}
-                className={cn({'is-invalid': (formProps.errors.username && formProps.touched.username) || netError})}
-              />
-              {formProps.errors.username && formProps.touched.username ? (
-                <div className="invalid-tooltip">{formProps.errors.username}</div>
-              ) : null}
+          <h1 className="text-center mb-4">{t('headers.signUp')}</h1>
+          <Form.FloatingLabel className="mb-3" htmlFor="username" label={t('inputs.username.label')}>
+            <Form.Control
+              ref={usernameInput}
+              id="username"
+              name="username"
+              type="text"
+              placeholder={t('inputs.username.placeholder')}
+              required
+              disabled={isDisabled}
+              onChange={formProps.handleChange}
+              onBlur={formProps.handleBlur}
+              value={formProps.values.username}
+              className={cn({ 'is-invalid': (formProps.errors.username && formProps.touched.username) || netError })}
+            />
+            {formProps.errors.username && formProps.touched.username ? (
+              <div className="invalid-tooltip">{formProps.errors.username}</div>
+            ) : null}
           </Form.FloatingLabel>
           <Form.FloatingLabel className="mb-4" htmlFor="password" label={t('inputs.password.label')}>
-              <Form.Control
-                id="password"
-                name="password"
-                type="password"
-                placeholder={t('inputs.password.placeholder')}
-                required
-                disabled={isDisabled}
-                onChange={formProps.handleChange}
-                onBlur={formProps.handleBlur}
-                value={formProps.values.password}
-                className={cn({'is-invalid': (formProps.errors.password && formProps.touched.password) || netError})}
-              />
-              {formProps.errors.password && formProps.touched.password ? (
-                <div className="invalid-tooltip">{formProps.errors.password}</div>
-              ) : null}
+            <Form.Control
+              id="password"
+              name="password"
+              type="password"
+              placeholder={t('inputs.password.placeholder')}
+              required
+              disabled={isDisabled}
+              onChange={formProps.handleChange}
+              onBlur={formProps.handleBlur}
+              value={formProps.values.password}
+              className={cn({ 'is-invalid': (formProps.errors.password && formProps.touched.password) || netError })}
+            />
+            {formProps.errors.password && formProps.touched.password ? (
+              <div className="invalid-tooltip">{formProps.errors.password}</div>
+            ) : null}
           </Form.FloatingLabel>
           <Form.FloatingLabel className="mb-4" htmlFor="confirmPassword" label={t('inputs.confirmPassword.label')}>
-              <Form.Control
-                id="confirmPassword"
-                name="confirmPassword"
-                type="password"
-                placeholder={t('inputs.confirmPassword.placeholder')}
-                required
-                disabled={isDisabled}
-                onChange={formProps.handleChange}
-                onBlur={formProps.handleBlur}
-                value={formProps.values.confirmPassword}
-                className={cn({'is-invalid': (formProps.errors.confirmPassword && formProps.touched.confirmPassword) || netError})}
-              />
-              {(formProps.errors.confirmPassword && formProps.touched.confirmPassword) || netError ? (
-                <div className="invalid-tooltip">{formProps.errors.confirmPassword ?? netError}</div>
-              ) : null}
+            <Form.Control
+              id="confirmPassword"
+              name="confirmPassword"
+              type="password"
+              placeholder={t('inputs.confirmPassword.placeholder')}
+              required
+              disabled={isDisabled}
+              onChange={formProps.handleChange}
+              onBlur={formProps.handleBlur}
+              value={formProps.values.confirmPassword}
+              className={cn({ 'is-invalid': (formProps.errors.confirmPassword && formProps.touched.confirmPassword) || netError })}
+            />
+            {(formProps.errors.confirmPassword && formProps.touched.confirmPassword) || netError ? (
+              <div className="invalid-tooltip">{formProps.errors.confirmPassword ?? netError}</div>
+            ) : null}
           </Form.FloatingLabel>
           <Button
             type="submit"

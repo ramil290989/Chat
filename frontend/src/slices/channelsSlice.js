@@ -10,7 +10,7 @@ export const fetchChannels = createAsyncThunk(
     const dataConfig = { headers: { Authorization: `Bearer ${token}` } };
     const response = await axios.get(dataRoute, dataConfig);
     return response.data;
-  }
+  },
 );
 
 const channelsAdapter = createEntityAdapter();
@@ -46,7 +46,9 @@ const channelsSlice = createSlice({
       })
       .addCase(fetchChannels.fulfilled, (state, action) => {
         channelsAdapter.addMany(state, action.payload.channels);
-        state.currentChannel = _.find(action.payload.channels, (channel) => channel.id === action.payload.currentChannelId);
+        state.currentChannel = _.find(action.payload.channels, (channel) => (
+          channel.id === action.payload.currentChannelId
+        ));
         state.defaultChannel = state.currentChannel;
         state.loadingStatus = 'idle';
         state.error = null;
@@ -54,7 +56,7 @@ const channelsSlice = createSlice({
       .addCase(fetchChannels.rejected, (state, action) => {
         state.loadingStatus = 'failed';
         state.error = action.error;
-      })
+      });
   },
 });
 

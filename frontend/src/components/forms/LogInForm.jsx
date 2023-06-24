@@ -1,4 +1,6 @@
-import React, {useState, useEffect, useRef, useContext} from 'react';
+import React, {
+  useState, useEffect, useRef, useContext,
+} from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Formik } from 'formik';
@@ -21,7 +23,7 @@ const LogInForm = () => {
 
   const { t } = useTranslation();
 
-  const notify = (errorMessage) => toast.error(errorMessage);  
+  const notify = (errorMessage) => toast.error(errorMessage);
 
   return (
     <Formik
@@ -55,40 +57,40 @@ const LogInForm = () => {
     >
       {(formProps) => (
         <Form onSubmit={formProps.handleSubmit} className="col-12 col-md-6 mt-3 mt-mb-0">
-          <h1 class="text-center mb-4">{t('headers.login')}</h1>
-            <Form.FloatingLabel className="mb-3" htmlFor="username" label={t('inputs.login.label')}>
-              <Form.Control
-                ref={usernameInput}
-                id="username"
-                name="username"
-                type="text"
-                placeholder={t('inputs.login.placeholder')}
-                onChange={formProps.handleChange}
-                onBlur={formProps.handleBlur}
-                ontou
-                value={formProps.values.username}
-                className={cn({'is-invalid': netError})}
-                disabled={isDisabled}
-                required
-              />
-            </Form.FloatingLabel>
-            <Form.FloatingLabel className="mb-4" htmlFor="password" label={t('inputs.password.label')}>
-              <Form.Control
-                id="password"
-                name="password"
-                type="password"
-                placeholder={t('inputs.password.placeholder')}
-                onChange={formProps.handleChange}
-                onBlur={formProps.handleBlur}
-                value={formProps.values.password}
-                className={cn({'is-invalid': netError})}
-                disabled={isDisabled}
-                required
-              />
-              {netError ? (
-                <div className="invalid-tooltip">{netError}</div>
-              ) : null}
-            </Form.FloatingLabel>
+          <h1 className="text-center mb-4">{t('headers.login')}</h1>
+          <Form.FloatingLabel className="mb-3" htmlFor="username" label={t('inputs.login.label')}>
+            <Form.Control
+              ref={usernameInput}
+              id="username"
+              name="username"
+              type="text"
+              placeholder={t('inputs.login.placeholder')}
+              onChange={formProps.handleChange}
+              onBlur={formProps.handleBlur}
+              ontou
+              value={formProps.values.username}
+              className={cn({ 'is-invalid': netError })}
+              disabled={isDisabled}
+              required
+            />
+          </Form.FloatingLabel>
+          <Form.FloatingLabel className="mb-4" htmlFor="password" label={t('inputs.password.label')}>
+            <Form.Control
+              id="password"
+              name="password"
+              type="password"
+              placeholder={t('inputs.password.placeholder')}
+              onChange={formProps.handleChange}
+              onBlur={formProps.handleBlur}
+              value={formProps.values.password}
+              className={cn({ 'is-invalid': netError })}
+              disabled={isDisabled}
+              required
+            />
+            {netError ? (
+              <div className="invalid-tooltip">{netError}</div>
+            ) : null}
+          </Form.FloatingLabel>
           <Button type="submit" variant="outline-primary" className="w-100 mb-3" disabled={isDisabled}>{t('buttons.logIn')}</Button>
         </Form>
       )}

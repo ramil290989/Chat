@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import { Formik } from 'formik';
 import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
@@ -44,14 +44,14 @@ const AddChannelForm = (props) => {
               id="channelName"
               name="channelName"
               type="text"
-              className={cn('mb-2', 'form-control', {'is-invalid': formProps.errors.channelName})}
+              className={cn('mb-2', 'form-control', { 'is-invalid': formProps.errors.channelName })}
               onChange={formProps.handleChange}
               onBlur={formProps.handleBlur}
               value={formProps.values.channelName}
             />
             <div className="invalid-feedback">{formProps.errors.channelName}</div>
             <div className="d-flex justify-content-end">
-              <button className="me-2 btn btn-secondary" onClick={() => onHide()}>{t('buttons.cancel')}</button>
+              <button className="me-2 btn btn-secondary" type="button" onClick={() => onHide()}>{t('buttons.cancel')}</button>
               <button type="submit" className="btn btn-primary">{t('buttons.send')}</button>
             </div>
           </div>
@@ -59,6 +59,6 @@ const AddChannelForm = (props) => {
       )}
     </Formik>
   );
-}
+};
 
 export default AddChannelForm;

@@ -1,5 +1,5 @@
-import React from "react";
-import { useTranslation } from "react-i18next";
+import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 
 const ChatLoadingFailed = () => {
@@ -10,7 +10,7 @@ const ChatLoadingFailed = () => {
 
   return (
     <div className="text-center">
-      <h1 class="h4 text-muted">{t('loadingStatus.failed')}</h1>
+      <h1 className="h4 text-muted">{t('loadingStatus.failed')}</h1>
     </div>
   );
 };

@@ -1,7 +1,7 @@
-import React from "react";
-import { Modal } from "react-bootstrap";
+import React from 'react';
+import { Modal } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
-import AddChannelForm from "../forms/AddChannelForm.jsx";
+import AddChannelForm from '../forms/AddChannelForm.jsx';
 
 const AddChannelModal = (props) => {
   const { show, onHide, channelNames } = props;
@@ -24,6 +24,6 @@ const AddChannelModal = (props) => {
       </Modal.Body>
     </Modal>
   );
-}
+};
 
 export default AddChannelModal;

@@ -6,9 +6,12 @@ const PageNotFound = () => {
   const { t } = useTranslation();
   return (
     <div className="text-center">
-      <img src={pageNotFoundImage} alt='' className="img-fluid h-25"></img>
-      <h1 class="h4 text-muted">{t('headers.404')}</h1>
-      <p class="text-muted">{t('texts.404')} <a href="/">{t('links.toMain')}</a></p>
+      <img src={pageNotFoundImage} alt="" className="img-fluid h-25" />
+      <h1 className="h4 text-muted">{t('headers.404')}</h1>
+      <p className="text-muted">
+        {t('texts.404')}
+        <a href="/">{t('links.toMain')}</a>
+      </p>
     </div>
   );
 };

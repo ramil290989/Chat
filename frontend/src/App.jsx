@@ -4,14 +4,14 @@ import { ToastContainer } from 'react-toastify';
 import { AuthorizationData } from './contexts/AuthorizationData.js';
 import HeaderNav from './components/HeaderNav.jsx';
 import PageNotFound from './pages/PageNotFound.jsx';
-import MainPage from './pages/MainPage.jsx'
+import MainPage from './pages/MainPage.jsx';
 import LogIn from './pages/LogIn.jsx';
 import SignUp from './pages/SignUp.jsx';
 
 const App = () => {
   const { username, token } = localStorage;
   const [authorizationData, setAuthorizationData] = useState({ username, token });
-  
+
   return (
     <AuthorizationData.Provider value={[authorizationData, setAuthorizationData]}>
       <div className="d-flex flex-column h-100">

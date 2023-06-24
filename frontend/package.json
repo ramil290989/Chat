@@ -12,6 +12,7 @@
     "@testing-library/user-event": "^13.5.0",
     "axios": "^1.4.0",
     "bootstrap": "^5.2.3",
+    "classnames": "^2.3.2",
     "formik": "^2.4.0",
     "i18next": "^23.2.0",
     "jose": "^4.14.4",
@@ -37,12 +38,6 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
-  },
   "browserslist": {
     "production": [
       ">0.2%",
@@ -57,6 +52,8 @@
   },
   "devDependencies": {
     "eslint": "^8.43.0",
-    "eslint-config-airbnb": "^19.0.4"
+    "eslint-config-airbnb": "^19.0.4",
+    "eslint-plugin-functional": "^5.0.8",
+    "eslint-plugin-react": "^7.32.2"
   }
 }
