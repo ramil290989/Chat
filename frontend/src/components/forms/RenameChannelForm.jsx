@@ -45,7 +45,7 @@ const RenameChannelForm = (props) => {
               onBlur={formProps.handleBlur}
               value={formProps.values.newName}
             />
-            <div className="invalid-feedback">{formProps.errors.renameChannelName}</div>
+            <div className="invalid-feedback">{formProps.errors.newName}</div>
             <div className="d-flex justify-content-end">
               <button className="me-2 btn btn-secondary" type="button" onClick={() => onHide()}>{t('buttons.cancel')}</button>
               <button type="submit" className="btn btn-primary">{t('buttons.send')}</button>
