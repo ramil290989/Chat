@@ -3,7 +3,7 @@ import { actions as channelsActions } from './slices/channelsSlice.js';
 import { actions as messagesActions } from './slices/messagesSlice.js';
 import store from './slices/index.js';
 
-const socket = io('ws://localhost:5001');
+const socket = io();
 
 const socketEvents = {
   newMessage: ({ body, channelId, username }) => socket.emit('newMessage', { body, channelId, username }),

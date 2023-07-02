@@ -5,7 +5,6 @@ import 'react-toastify/dist/ReactToastify.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import initI18n from './initI18n.js';
 import initLeoProfanity from './initLeoProfanity.js';
-import socketSubscribe from './initSocket.js';
 import rollbarConfig from './rollbarConfig.js';
 import store from './slices/index.js';
 import App from './App.jsx';
@@ -14,7 +13,6 @@ import PageNotFound from './pages/PageNotFound.jsx';
 const init = async () => {
   await initI18n();
   initLeoProfanity();
-  socketSubscribe();
 
   return (
     <RollbarProvider config={rollbarConfig}>

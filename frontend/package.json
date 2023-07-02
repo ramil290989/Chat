@@ -1,9 +1,9 @@
 {
   "name": "@hexlet/code",
   "version": "0.1.0",
-  "main": "src/init.jsx",
+  "main": "src/index.jsx",
   "private": true,
-  "proxy": "http://127.0.0.1:5001",
+  "proxy": "http://localhost:5001",
   "dependencies": {
     "@reduxjs/toolkit": "^1.9.5",
     "@rollbar/react": "^0.11.1",
