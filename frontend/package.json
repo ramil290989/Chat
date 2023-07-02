@@ -1,7 +1,7 @@
 {
   "name": "@hexlet/code",
   "version": "0.1.0",
-  "main": "src/index.jsx",
+  "main": "src/init.jsx",
   "private": true,
   "proxy": "http://127.0.0.1:5001",
   "dependencies": {
