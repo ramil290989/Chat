@@ -71,7 +71,7 @@ const SignUpForm = () => {
       {(formProps) => (
         <Form onSubmit={formProps.handleSubmit} className="col-12 col-md-6 mt-3 mt-mb-0">
           <h1 className="text-center mb-4">{t('headers.signUp')}</h1>
-          <Form.FloatingLabel className="mb-3" htmlFor="username" label={t('inputs.username.label')}>
+          <Form.FloatingLabel className="mb-3" controlId="username" label={t('inputs.username.label')}>
             <Form.Control
               ref={usernameInput}
               id="username"
@@ -89,7 +89,7 @@ const SignUpForm = () => {
               <div className="invalid-tooltip">{formProps.errors.username}</div>
             ) : null}
           </Form.FloatingLabel>
-          <Form.FloatingLabel className="mb-4" htmlFor="password" label={t('inputs.password.label')}>
+          <Form.FloatingLabel className="mb-4" controlId="password" label={t('inputs.password.label')}>
             <Form.Control
               id="password"
               name="password"
@@ -106,7 +106,7 @@ const SignUpForm = () => {
               <div className="invalid-tooltip">{formProps.errors.password}</div>
             ) : null}
           </Form.FloatingLabel>
-          <Form.FloatingLabel className="mb-4" htmlFor="confirmPassword" label={t('inputs.confirmPassword.label')}>
+          <Form.FloatingLabel className="mb-4" controlId="confirmPassword" label={t('inputs.confirmPassword.label')}>
             <Form.Control
               id="confirmPassword"
               name="confirmPassword"
