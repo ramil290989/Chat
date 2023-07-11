@@ -60,6 +60,7 @@ const ru = {
       rename: 'Переименовать',
       send: 'Отправить',
       cancel: 'Отменить',
+      channelControl: 'Управление каналом',
     },
     links: {
       signUp: 'Регистрация',

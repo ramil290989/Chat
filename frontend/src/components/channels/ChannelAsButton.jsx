@@ -41,7 +41,9 @@ const ChannelAsButton = (props) => {
         variant={currentChannel.id === channel.id ? 'secondary' : ''}
         className="flex-grow-0"
         id="dropdown-split-basic"
-      />
+      >
+        <span className="visually-hidden">{t('buttons.channelControl')}</span>
+      </Dropdown.Toggle>
       <Dropdown.Menu>
         <Dropdown.Item href="#" onClick={() => setRemoveChannelModalProps({ show: true, id: channel.id })}>{t('buttons.remove')}</Dropdown.Item>
         <Dropdown.Item href="#" onClick={() => setRenameChannelModalProps({ show: true, id: channel.id, name: channel.name })}>{t('buttons.rename')}</Dropdown.Item>
