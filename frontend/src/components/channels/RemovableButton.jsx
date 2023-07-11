@@ -1,6 +1,7 @@
 import React from 'react';
-import { Button, ButtonGroup, Dropdown } from 'react-bootstrap';
+import { ButtonGroup, Dropdown } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
+import NotRemovableButton from './NotRemovableButton';
 
 const RemovableButton = (props) => {
   const {
@@ -14,14 +15,11 @@ const RemovableButton = (props) => {
 
   return (
     <Dropdown as={ButtonGroup} className="d-flex">
-      <Button
-        variant={currentChannel.id === channel.id ? 'secondary' : ''}
-        className="w-100 rounded-0 text-start text-truncate"
+      <NotRemovableButton
+        currentChannel={currentChannel}
+        channel={channel}
         onClick={() => onClick()}
-      >
-        <span className="me-1">#</span>
-        {channel.name}
-      </Button>
+      />
       <Dropdown.Toggle
         split
         variant={currentChannel.id === channel.id ? 'secondary' : ''}
