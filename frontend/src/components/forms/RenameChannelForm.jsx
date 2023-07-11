@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 import cn from 'classnames';
@@ -11,6 +11,11 @@ const RenameChannelForm = (props) => {
     onHide, channelNames, renameChannelId, renameChannelName,
   } = props;
 
+  const renameChannel = useRef(null);
+  useEffect(() => {
+    renameChannel.current.select();
+  });
+
   const { t } = useTranslation();
 
   const notify = () => toast.success(t('toastifyNotify.channelRenamed'));
@@ -18,17 +23,17 @@ const RenameChannelForm = (props) => {
   return (
     <Formik
       initialValues={{
-        newName: renameChannelName,
+        name: renameChannelName,
       }}
       validationSchema={Yup.object({
-        newName: Yup.string()
+        name: Yup.string()
           .min(3, t('validations.min3max20'))
           .max(20, t('validations.min3max20'))
           .notOneOf(channelNames, t('validations.notOneOf'))
           .required(t('validations.required')),
       })}
-      onSubmit={({ newName }) => {
-        socketEvents.renameChannel({ id: renameChannelId, name: newName });
+      onSubmit={({ name }) => {
+        socketEvents.renameChannel({ id: renameChannelId, name });
         onHide();
         notify();
       }}
@@ -37,14 +42,16 @@ const RenameChannelForm = (props) => {
         <form onSubmit={formProps.handleSubmit}>
           <div>
             <input
-              id="newName"
-              name="newName"
+              ref={renameChannel}
+              id="name"
+              name="name"
               type="text"
-              className={cn('mb-2', 'form-control', { 'is-invalid': formProps.errors.newName })}
+              className={cn('mb-2', 'form-control', { 'is-invalid': formProps.errors.name })}
               onChange={formProps.handleChange}
               onBlur={formProps.handleBlur}
-              value={formProps.values.newName}
+              value={formProps.values.name}
             />
+            <label className="visually-hidden" htmlFor="name">{t('inputs.channelName.label')}</label>
             <div className="invalid-feedback">{formProps.errors.newName}</div>
             <div className="d-flex justify-content-end">
               <button className="me-2 btn btn-secondary" type="button" onClick={() => onHide()}>{t('buttons.cancel')}</button>

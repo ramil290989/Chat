@@ -44,6 +44,9 @@ const ru = {
         label: 'Подтвердите пароль',
         placeholder: 'Подтвердите пароль',
       },
+      channelName: {
+        label: 'Имя канала',
+      },
       message: {
         placeholder: 'Введите сообщение...',
         ariaLabel: 'Новое сообщение',
