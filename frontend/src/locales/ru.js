@@ -46,6 +46,7 @@ const ru = {
       },
       message: {
         placeholder: 'Введите сообщение...',
+        ariaLabel: 'Новое сообщение',
       },
     },
     buttons: {
