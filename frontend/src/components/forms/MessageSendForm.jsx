@@ -23,11 +23,11 @@ const MessageSendForm = () => {
     <div className="mt-auto px-5 py-3">
       <Formik
         initialValues={{
-          messageBody: '',
+          body: '',
         }}
-        onSubmit={({ messageBody }, formikBag) => {
-          const body = filter.clean(messageBody);
-          socketEvents.newMessage({ body, channelId: currentChannel.id, username });
+        onSubmit={({ body }, formikBag) => {
+          const messageBody = filter.clean(body);
+          socketEvents.newMessage({ body: messageBody, channelId: currentChannel.id, username });
           formikBag.resetForm();
         }}
       >
@@ -36,13 +36,13 @@ const MessageSendForm = () => {
             <div className="input-group has-validation">
               <input
                 ref={messageInput}
-                id="messageBody"
-                name="messageBody"
+                id="body"
+                name="body"
                 type="text"
                 className="border-0 p-0 ps-2 form-control"
                 placeholder={t('inputs.message.placeholder')}
                 onChange={formProps.handleChange}
-                value={formProps.values.messageBody}
+                value={formProps.values.body}
               />
               <button type="submit" className="btn btn-group-vertical" disabled="">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="20" height="20" fill="currentColor">

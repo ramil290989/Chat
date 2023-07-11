@@ -45,7 +45,7 @@ const ru = {
         placeholder: 'Подтвердите пароль',
       },
       message: {
-        placeholder: 'введите текст сообщения',
+        placeholder: 'Введите сообщение...',
       },
     },
     buttons: {
