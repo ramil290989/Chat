@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { Button } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
-import { AuthorizationData } from '../contexts/AuthorizationData.js';
+import AuthorizationData from '../contexts/AuthorizationData.js';
 
 const LogOutButton = () => {
   const [authorizationData, setAuthorizationData] = useContext(AuthorizationData);

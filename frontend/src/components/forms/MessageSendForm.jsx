@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { Formik } from 'formik';
 import filter from 'leo-profanity';
 import { socketEvents } from '../../initSocket.js';
-import { AuthorizationData } from '../../contexts/AuthorizationData.js';
+import AuthorizationData from '../../contexts/AuthorizationData.js';
 
 const MessageSendForm = () => {
   const [authorizationData] = useContext(AuthorizationData);

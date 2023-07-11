@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
-import { AuthorizationData } from './contexts/AuthorizationData.js';
+import AuthorizationData from './contexts/AuthorizationData.js';
 import HeaderNav from './components/HeaderNav.jsx';
 import PageNotFound from './pages/PageNotFound.jsx';
 import MainPage from './pages/MainPage.jsx';

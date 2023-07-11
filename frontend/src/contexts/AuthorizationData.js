@@ -1,3 +1,5 @@
 import React from 'react';
 
-export const AuthorizationData = React.createContext();
+const AuthorizationData = React.createContext();
+
+export default AuthorizationData;

@@ -1,7 +1,7 @@
 import React, { useContext, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import socketSubscribe from '../initSocket.js';
-import { AuthorizationData } from '../contexts/AuthorizationData.js';
+import AuthorizationData from '../contexts/AuthorizationData.js';
 import { fetchChannels } from '../slices/channelsSlice.js';
 import ChatLoading from '../components/ChatLoading.jsx';
 import ChatLoadingFailed from '../components/ChatLoadingFailed.jsx';

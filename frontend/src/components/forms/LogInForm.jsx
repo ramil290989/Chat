@@ -9,14 +9,14 @@ import { toast } from 'react-toastify';
 import axios from 'axios';
 import cn from 'classnames';
 import route from '../../routes';
-import { AuthorizationData } from '../../contexts/AuthorizationData.js';
+import AuthorizationData from '../../contexts/AuthorizationData.js';
 
 const LogInForm = () => {
   const usernameInput = useRef(null);
   useEffect(() => {
     usernameInput.current.focus();
   });
-  const [authorizationData, setAuthorizationData] = useContext(AuthorizationData);
+  const [_, setAuthorizationData] = useContext(AuthorizationData);
   const [isDisabled, setIsDisabled] = useState(false);
   const [netError, setNetError] = useState(null);
   const navigate = useNavigate();
