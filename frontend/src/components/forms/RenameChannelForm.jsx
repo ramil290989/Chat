@@ -22,8 +22,8 @@ const RenameChannelForm = (props) => {
       }}
       validationSchema={Yup.object({
         newName: Yup.string()
-          .min(3, t('validations.min3'))
-          .max(20, t('validations.max20'))
+          .min(3, t('validations.min3max20'))
+          .max(20, t('validations.min3max20'))
           .notOneOf(channelNames, t('validations.notOneOf'))
           .required(t('validations.required')),
       })}

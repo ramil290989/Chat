@@ -35,8 +35,8 @@ const SignUpForm = () => {
       }}
       validationSchema={Yup.object({
         username: Yup.string()
-          .min(3, t('validations.min3'))
-          .max(20, t('validations.max20'))
+          .min(3, t('validations.min3max20'))
+          .max(20, t('validations.min3max20'))
           .required(t('validations.required')),
         password: Yup.string()
           .min(6, t('validations.min6'))

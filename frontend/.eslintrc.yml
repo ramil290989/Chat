@@ -18,3 +18,4 @@ rules:
   react/jsx-no-constructed-context-values: 0
   no-unused-vars: 0
   import/prefer-default-export: 0
+  linebreak-style: 0
