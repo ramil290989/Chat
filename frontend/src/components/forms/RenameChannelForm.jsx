@@ -52,7 +52,7 @@ const RenameChannelForm = (props) => {
               value={formProps.values.name}
             />
             <label className="visually-hidden" htmlFor="name">{t('inputs.channelName.label')}</label>
-            <div className="invalid-feedback">{formProps.errors.newName}</div>
+            <div className="invalid-feedback">{formProps.errors.name}</div>
             <div className="d-flex justify-content-end">
               <button className="me-2 btn btn-secondary" type="button" onClick={() => onHide()}>{t('buttons.cancel')}</button>
               <button type="submit" className="btn btn-primary">{t('buttons.send')}</button>
