@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import AuthorizationData from '../contexts/AuthorizationData.js';
 
 const LogOutButton = () => {
-  const [authorizationData, setAuthorizationData] = useContext(AuthorizationData);
+  const { authorizationData, setAuthorizationData } = useContext(AuthorizationData);
   const { t } = useTranslation();
 
   return (

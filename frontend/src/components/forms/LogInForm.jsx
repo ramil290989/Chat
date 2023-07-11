@@ -16,7 +16,7 @@ const LogInForm = () => {
   useEffect(() => {
     usernameInput.current.focus();
   });
-  const [_, setAuthorizationData] = useContext(AuthorizationData);
+  const { setAuthorizationData } = useContext(AuthorizationData);
   const [isDisabled, setIsDisabled] = useState(false);
   const [netError, setNetError] = useState(null);
   const navigate = useNavigate();

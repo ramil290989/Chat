@@ -10,7 +10,7 @@ import Chat from '../components/Chat.jsx';
 const MainPage = () => {
   const dispatch = useDispatch();
   const loadingStatus = useSelector((state) => state.channels.loadingStatus);
-  const [authorizationData] = useContext(AuthorizationData);
+  const { authorizationData } = useContext(AuthorizationData);
 
   useEffect(() => {
     if (loadingStatus === 'loading') {

@@ -7,7 +7,7 @@ import { socketEvents } from '../../initSocket.js';
 import AuthorizationData from '../../contexts/AuthorizationData.js';
 
 const MessageSendForm = () => {
-  const [authorizationData] = useContext(AuthorizationData);
+  const { authorizationData } = useContext(AuthorizationData);
   const { username } = authorizationData;
 
   const messageInput = useRef(null);

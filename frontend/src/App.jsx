@@ -13,7 +13,7 @@ const App = () => {
   const [authorizationData, setAuthorizationData] = useState({ username, token });
 
   return (
-    <AuthorizationData.Provider value={[authorizationData, setAuthorizationData]}>
+    <AuthorizationData.Provider value={{ authorizationData, setAuthorizationData }}>
       <div className="d-flex flex-column h-100">
         <HeaderNav />
         <BrowserRouter>
