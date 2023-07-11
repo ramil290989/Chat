@@ -58,7 +58,7 @@ const LogInForm = () => {
       {(formProps) => (
         <Form onSubmit={formProps.handleSubmit} className="col-12 col-md-6 mt-3 mt-mb-0">
           <h1 className="text-center mb-4">{t('headers.login')}</h1>
-          <Form.FloatingLabel className="mb-3" htmlFor="username" label={t('inputs.login.label')}>
+          <Form.FloatingLabel className="mb-3" controlId="username" label={t('inputs.login.label')}>
             <Form.Control
               ref={usernameInput}
               id="username"
@@ -74,7 +74,7 @@ const LogInForm = () => {
               required
             />
           </Form.FloatingLabel>
-          <Form.FloatingLabel className="mb-4" htmlFor="password" label={t('inputs.password.label')}>
+          <Form.FloatingLabel className="mb-4" controlId="password" label={t('inputs.password.label')}>
             <Form.Control
               id="password"
               name="password"
