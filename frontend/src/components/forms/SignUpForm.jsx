@@ -8,9 +8,9 @@ import { Form, Button } from 'react-bootstrap';
 import { toast } from 'react-toastify';
 import axios from 'axios';
 import cn from 'classnames';
-import * as Yup from 'yup';
 import route from '../../routes';
 import AuthorizationData from '../../contexts/AuthorizationData';
+import { validationSchemaSignUp } from '../../validationSchemas';
 
 const SignUpForm = () => {
   const usernameInput = useRef(null);
@@ -33,18 +33,7 @@ const SignUpForm = () => {
         password: '',
         confirmPassword: '',
       }}
-      validationSchema={Yup.object({
-        username: Yup.string()
-          .min(3, t('validations.min3max20'))
-          .max(20, t('validations.min3max20'))
-          .required(t('validations.required')),
-        password: Yup.string()
-          .min(6, t('validations.min6'))
-          .required(t('validations.required')),
-        confirmPassword: Yup.string()
-          .oneOf([Yup.ref('password'), null], t('validations.oneOf'))
-          .required(t('validations.required')),
-      })}
+      validationSchema={validationSchemaSignUp(t)}
       onSubmit={async ({ username, password }) => {
         setIsDisabled(true);
         const loginRoute = route.signup();

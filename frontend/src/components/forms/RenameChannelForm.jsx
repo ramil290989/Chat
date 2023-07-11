@@ -1,10 +1,10 @@
 import React, { useEffect, useRef } from 'react';
 import { Formik } from 'formik';
-import * as Yup from 'yup';
 import cn from 'classnames';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 import { socketEvents } from '../../initSocket';
+import { validationSchemaChannelName } from '../../validationSchemas';
 
 const RenameChannelForm = (props) => {
   const {
@@ -25,13 +25,7 @@ const RenameChannelForm = (props) => {
       initialValues={{
         name: renameChannelName,
       }}
-      validationSchema={Yup.object({
-        name: Yup.string()
-          .min(3, t('validations.min3max20'))
-          .max(20, t('validations.min3max20'))
-          .notOneOf(channelNames, t('validations.notOneOf'))
-          .required(t('validations.required')),
-      })}
+      validationSchema={validationSchemaChannelName(channelNames, t)}
       onSubmit={({ name }) => {
         socketEvents.renameChannel({ id: renameChannelId, name });
         onHide();

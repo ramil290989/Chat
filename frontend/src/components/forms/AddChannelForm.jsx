@@ -3,10 +3,10 @@ import { Formik } from 'formik';
 import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
-import * as Yup from 'yup';
 import cn from 'classnames';
 import { actions } from '../../slices/channelsSlice.js';
 import { socket, socketEvents } from '../../initSocket.js';
+import { validationSchemaChannelName } from '../../validationSchemas.js';
 
 const AddChannelForm = (props) => {
   const { onHide, channelNames } = props;
@@ -26,13 +26,7 @@ const AddChannelForm = (props) => {
       initialValues={{
         name: '',
       }}
-      validationSchema={Yup.object({
-        name: Yup.string()
-          .min(3, t('validations.min3max20'))
-          .max(20, t('validations.min3max20'))
-          .notOneOf(channelNames, t('validations.notOneOf'))
-          .required(t('validations.required')),
-      })}
+      validationSchema={validationSchemaChannelName(channelNames, t)}
       onSubmit={({ name }) => {
         socketEvents.newChannel({ name });
         socket.on('newChannel', (payload) => {
