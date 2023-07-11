@@ -3,7 +3,7 @@ const ru = {
     toastifyNotify: {
       channelAdded: 'Канал создан',
       channelRenamed: 'Канал переименован',
-      channelRemoved: 'Канал удален',
+      channelRemoved: 'Канал удалён',
     },
     headers: {
       headerNav: 'Hexlet Chat',
