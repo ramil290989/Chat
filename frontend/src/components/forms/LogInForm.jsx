@@ -15,7 +15,7 @@ const LogInForm = () => {
   const usernameInput = useRef(null);
   useEffect(() => {
     usernameInput.current.focus();
-  });
+  }, []);
   const { setAuthorizationData } = useContext(AuthorizationData);
   const [isDisabled, setIsDisabled] = useState(false);
   const [netError, setNetError] = useState(null);
@@ -37,21 +37,21 @@ const LogInForm = () => {
         const loginRoute = route.login();
         const loginData = { username, password };
         await axios.post(loginRoute, loginData)
-          .then((response) => {
-            localStorage.setItem('username', response.data.username);
-            localStorage.setItem('token', response.data.token);
-            setAuthorizationData({ token: response.data.token, username: response.data.username });
-            setIsDisabled(false);
+          .then(({ data }) => {
+            localStorage.setItem('username', data.username);
+            localStorage.setItem('token', data.token);
+            setAuthorizationData({ token: data.token, username: data.username });
             navigate('/');
           })
           .catch((error) => {
             if (error.response.status === 401) {
               setNetError(t('errors.401'));
-              setIsDisabled(false);
             } else {
               notify(t('errors.connectionError'));
-              setIsDisabled(false);
             }
+          })
+          .finally(() => {
+            setIsDisabled(false);
           });
       }}
     >

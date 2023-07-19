@@ -1,42 +1,58 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useContext, useEffect, useRef } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { Formik } from 'formik';
 import cn from 'classnames';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
-import { socketEvents } from '../../initSocket';
-import { validationSchemaChannelName } from '../../validationSchemas';
+import SocketContext from '../../contexts/SocketContext.js';
+import { validationSchemaChannelName } from '../../validationSchemas.js';
+import { selectors as channelsSelectors } from '../../slices/channelsSlice.js';
+import { actions as modalsActions } from '../../slices/modalsSlice.js';
 
-const RenameChannelForm = (props) => {
-  const {
-    onHide, channelNames, renameChannelId, renameChannelName,
-  } = props;
-
-  const renameChannel = useRef(null);
+const RenameChannelForm = () => {
+  const renameChannelinput = useRef(null);
   useEffect(() => {
-    renameChannel.current.select();
-  });
+    renameChannelinput.current.select();
+  }, []);
 
+  const dispatch = useDispatch();
   const { t } = useTranslation();
 
-  const notify = () => toast.success(t('toastifyNotify.channelRenamed'));
+  const { renameChannel } = useContext(SocketContext);
+
+  const channels = useSelector(channelsSelectors.selectAll);
+  const channelNames = channels.map((channel) => channel.name);
+  const id = useSelector((state) => state.modals.id);
+  const oldName = useSelector((state) => state.modals.name);
+
+  const onHide = () => {
+    dispatch(modalsActions.modalHide());
+  };
+
+  const notifyOk = () => toast.success(t('toastifyNotify.channelRenamed'));
+  const notifyErr = () => toast.error(t('errors.connectionError'));
 
   return (
     <Formik
       initialValues={{
-        name: renameChannelName,
+        name: oldName,
       }}
       validationSchema={validationSchemaChannelName(channelNames, t)}
-      onSubmit={({ name }) => {
-        socketEvents.renameChannel({ id: renameChannelId, name });
-        onHide();
-        notify();
+      onSubmit={async ({ name }) => {
+        try {
+          await renameChannel({ id, name });
+          onHide();
+          notifyOk();
+        } catch (e) {
+          notifyErr();
+        }
       }}
     >
       {(formProps) => (
         <form onSubmit={formProps.handleSubmit}>
           <div>
             <input
-              ref={renameChannel}
+              ref={renameChannelinput}
               id="name"
               name="name"
               type="text"

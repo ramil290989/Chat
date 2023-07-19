@@ -2,22 +2,25 @@ import React, { useContext, useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { Formik } from 'formik';
+import { toast } from 'react-toastify';
 import filter from 'leo-profanity';
-import { socketEvents } from '../../initSocket.js';
+import SocketContext from '../../contexts/SocketContext.js';
 import AuthorizationData from '../../contexts/AuthorizationData.js';
 
 const MessageSendForm = () => {
-  const { authorizationData } = useContext(AuthorizationData);
-  const { username } = authorizationData;
+  const { authorizationData: { username } } = useContext(AuthorizationData);
+  const { newMessage } = useContext(SocketContext);
 
   const messageInput = useRef(null);
   useEffect(() => {
     messageInput.current.focus();
-  });
+  }, []);
 
   const currentChannel = useSelector((state) => state.channels.currentChannel);
 
   const { t } = useTranslation();
+
+  const notifyErr = () => toast.error(t('errors.connectionError'));
 
   return (
     <div className="mt-auto px-5 py-3">
@@ -25,10 +28,14 @@ const MessageSendForm = () => {
         initialValues={{
           body: '',
         }}
-        onSubmit={({ body }, formikBag) => {
-          const messageBody = filter.clean(body);
-          socketEvents.newMessage({ body: messageBody, channelId: currentChannel.id, username });
-          formikBag.resetForm();
+        onSubmit={async ({ body }, formikBag) => {
+          try {
+            const messageBody = filter.clean(body);
+            await newMessage({ body: messageBody, channelId: currentChannel.id, username });
+            formikBag.resetForm();
+          } catch (e) {
+            notifyErr();
+          }
         }}
       >
         {(formProps) => (

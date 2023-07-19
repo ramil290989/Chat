@@ -1,26 +1,41 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { Modal, Button } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
-import { socketEvents } from '../../initSocket';
+import SocketContext from '../../contexts/SocketContext.js';
+import { actions as modalsActions } from '../../slices/modalsSlice.js';
 
-const RemoveChannelModal = (props) => {
-  const { show, onHide, removeChannelId } = props;
-
+const RemoveChannelModal = () => {
+  const dispatch = useDispatch();
   const { t } = useTranslation();
 
-  const notify = () => toast.success(t('toastifyNotify.channelRemoved'));
+  const { removeChannel } = useContext(SocketContext);
 
-  const removeChannel = (channelId) => {
-    socketEvents.removeChannel({ id: channelId });
-    onHide();
-    notify();
+  const notifyOk = () => toast.success(t('toastifyNotify.channelRemoved'));
+  const notifyErr = () => toast.error(t('errors.connectionError'));
+
+  const isShow = useSelector((state) => state.modals.window) === 'removeChannel';
+  const onHide = () => {
+    dispatch(modalsActions.modalHide());
+  };
+
+  const id = useSelector((state) => state.modals.id);
+
+  const remove = async () => {
+    try {
+      await removeChannel({ id });
+      onHide();
+      notifyOk();
+    } catch (e) {
+      notifyErr();
+    }
   };
 
   return (
     <Modal
-      show={show}
-      onHide={() => onHide()}
+      show={isShow}
+      onHide={onHide}
       centered
     >
       <Modal.Header closeButton>
@@ -32,7 +47,7 @@ const RemoveChannelModal = (props) => {
         <p className="lead">{t('titles.sure')}</p>
         <div className="d-flex justify-content-end">
           <Button variant="secondary" className="me-2" onClick={() => onHide()}>{t('buttons.cancel')}</Button>
-          <Button variant="danger" onClick={() => removeChannel(removeChannelId)}>{t('buttons.remove')}</Button>
+          <Button variant="danger" onClick={() => remove()}>{t('buttons.remove')}</Button>
         </div>
       </Modal.Body>
     </Modal>

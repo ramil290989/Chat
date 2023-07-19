@@ -1,25 +1,38 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useContext, useEffect, useRef } from 'react';
 import { Formik } from 'formik';
-import { useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 import cn from 'classnames';
-import { actions } from '../../slices/channelsSlice.js';
-import { socket, socketEvents } from '../../initSocket.js';
+import { selectors as channelsSelectors, actions as channelsActions } from '../../slices/channelsSlice.js';
+import { actions as modalsActions } from '../../slices/modalsSlice.js';
+import SocketContext from '../../contexts/SocketContext.js';
 import { validationSchemaChannelName } from '../../validationSchemas.js';
 
-const AddChannelForm = (props) => {
-  const { onHide, channelNames } = props;
-  const dispatch = useDispatch();
-
+const AddChannelForm = () => {
   const newChannelName = useRef(null);
   useEffect(() => {
     newChannelName.current.focus();
-  });
+  }, []);
 
+  const dispatch = useDispatch();
   const { t } = useTranslation();
 
-  const notify = () => toast.success(t('toastifyNotify.channelAdded'));
+  const { newChannel } = useContext(SocketContext);
+
+  const channels = useSelector(channelsSelectors.selectAll);
+  const channelNames = channels.map((channel) => channel.name);
+
+  const onHide = () => {
+    dispatch(modalsActions.modalHide());
+  };
+
+  const notifyOk = () => toast.success(t('toastifyNotify.channelAdded'));
+  const notifyErr = () => toast.error(t('errors.connectionError'));
+
+  const dispatchChangeCurrentChannel = (data) => {
+    dispatch(channelsActions.changeCurrentChannel(data));
+  };
 
   return (
     <Formik
@@ -27,13 +40,14 @@ const AddChannelForm = (props) => {
         name: '',
       }}
       validationSchema={validationSchemaChannelName(channelNames, t)}
-      onSubmit={({ name }) => {
-        socketEvents.newChannel({ name });
-        socket.on('newChannel', (payload) => {
-          dispatch(actions.changeCurrentChannel(payload));
-        });
-        onHide();
-        notify();
+      onSubmit={async ({ name }) => {
+        try {
+          await newChannel({ name }, dispatchChangeCurrentChannel);
+          onHide();
+          notifyOk();
+        } catch (e) {
+          notifyErr();
+        }
       }}
     >
       {(formProps) => (
@@ -53,7 +67,7 @@ const AddChannelForm = (props) => {
             <div className="invalid-feedback">{formProps.errors.name}</div>
             <div className="d-flex justify-content-end">
               <button className="me-2 btn btn-secondary" type="button" onClick={() => onHide()}>{t('buttons.cancel')}</button>
-              <button type="submit" className="btn btn-primary">{t('buttons.send')}</button>
+              <button type="submit" className="btn btn-primary" disabled={formProps.isSubmitting}>{t('buttons.send')}</button>
             </div>
           </div>
         </form>

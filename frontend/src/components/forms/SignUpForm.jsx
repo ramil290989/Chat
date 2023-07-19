@@ -16,7 +16,7 @@ const SignUpForm = () => {
   const usernameInput = useRef(null);
   useEffect(() => {
     usernameInput.current.focus();
-  });
+  }, []);
   const { setAuthorizationData } = useContext(AuthorizationData);
   const [isDisabled, setIsDisabled] = useState(false);
   const [netError, setNetError] = useState(null);
