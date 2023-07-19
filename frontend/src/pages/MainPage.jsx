@@ -23,7 +23,7 @@ const MainPage = () => {
     if (loadingStatus === 'loading') {
       dispatch(fetchChannels(authorizationData.token));
     }
-  }, []);
+  }, [authorizationData.token, dispatch, loadingStatus]);
 
   switch (loadingStatus) {
     case 'loading':

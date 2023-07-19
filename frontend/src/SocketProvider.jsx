@@ -33,7 +33,7 @@ const SocketProvider = ({ children }) => {
       socket.off('removeChannel', removeChannel);
       socket.off('renameChannel', renameChannel);
     };
-  }, []);
+  }, [dispatch]);
 
   return (
     <SocketContext.Provider value={socketEvents}>
