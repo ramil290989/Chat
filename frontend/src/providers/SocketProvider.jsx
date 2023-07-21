@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { actions as messagesActions } from '../slices/messagesSlice.js';
 import { actions as channelsActions } from '../slices/channelsSlice.js';
-import { socket } from '../initSocket.js';
+import socket from '../initSocket.js';
 import SocketContext from '../contexts/SocketContext.js';
 import { notifyOk } from '../components/notify.jsx';
 

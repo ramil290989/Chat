@@ -19,11 +19,11 @@ const MainPage = () => {
     if (loadingStatus === 'loading') {
       dispatch(fetchChannels(token));
     }
-    if (loadingStatus === 'failed' && /401/.test(loadingError.message)) {
+    if (loadingStatus === 'failed' && /401/.test(loadingError)) {
       setAuthorizationData({});
       navigate('/login');
     }
-  }, [token, dispatch, loadingStatus]);
+  }, [token, dispatch, loadingStatus, loadingError, navigate, setAuthorizationData]);
 
   switch (loadingStatus) {
     case 'loading':

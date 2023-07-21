@@ -3,7 +3,7 @@ import { Formik } from 'formik';
 import { useSelector, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import cn from 'classnames';
-import { selectors as channelsSelectors, actions as channelsActions } from '../../slices/channelsSlice.js';
+import { selectors as channelsSelectors } from '../../slices/channelsSlice.js';
 import { actions as modalsActions } from '../../slices/modalsSlice.js';
 import { useNewChannel } from '../../hooks/socketHooks.js';
 import { validationSchemaChannelName } from '../../validationSchemas.js';

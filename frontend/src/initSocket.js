@@ -4,4 +4,4 @@ const URL = process.env.NODE_ENV === 'production' ? undefined : 'http://localhos
 
 const socket = io(URL);
 
-export { socket };
+export default socket;
