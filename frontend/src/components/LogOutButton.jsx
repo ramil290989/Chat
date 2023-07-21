@@ -1,10 +1,10 @@
 import React, { useContext } from 'react';
 import { Button } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
-import AuthorizationData from '../contexts/AuthorizationData.js';
+import AuthorizationContext from '../contexts/AuthorizationContext';
 
 const LogOutButton = () => {
-  const { authorizationData, setAuthorizationData } = useContext(AuthorizationData);
+  const { authorizationData, setAuthorizationData } = useContext(AuthorizationContext);
   const { t } = useTranslation();
 
   return (
@@ -15,7 +15,7 @@ const LogOutButton = () => {
           onClick={() => {
             localStorage.removeItem('token');
             localStorage.removeItem('username');
-            setAuthorizationData({ username: null, token: null });
+            setAuthorizationData({});
           }}
         >
           {t('buttons.logOut')}

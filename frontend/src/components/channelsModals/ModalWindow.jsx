@@ -12,7 +12,7 @@ const modalWindows = {
 const ModalWindow = ({ window }) => {
   const SelectedModalWindow = modalWindows[window];
   return (
-    <SelectedModalWindow />
+    window ? <SelectedModalWindow /> : null
   );
 };
 

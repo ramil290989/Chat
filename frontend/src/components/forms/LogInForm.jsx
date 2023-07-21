@@ -5,25 +5,26 @@ import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Formik } from 'formik';
 import { Form, Button } from 'react-bootstrap';
-import { toast } from 'react-toastify';
 import axios from 'axios';
 import cn from 'classnames';
-import route from '../../routes';
-import AuthorizationData from '../../contexts/AuthorizationData.js';
+import { notifyConnectionErr } from '../notify.jsx';
+import AuthorizationContext from '../../contexts/AuthorizationContext.js';
+import route from '../../routes.js';
 
 const LogInForm = () => {
   const usernameInput = useRef(null);
   useEffect(() => {
     usernameInput.current.focus();
   }, []);
-  const { setAuthorizationData } = useContext(AuthorizationData);
+
   const [isDisabled, setIsDisabled] = useState(false);
   const [netError, setNetError] = useState(null);
+
+  const { setAuthorizationData } = useContext(AuthorizationContext);
+
   const navigate = useNavigate();
 
   const { t } = useTranslation();
-
-  const notify = (errorMessage) => toast.error(errorMessage);
 
   return (
     <Formik
@@ -40,14 +41,14 @@ const LogInForm = () => {
           .then(({ data }) => {
             localStorage.setItem('username', data.username);
             localStorage.setItem('token', data.token);
-            setAuthorizationData({ token: data.token, username: data.username });
+            setAuthorizationData({ username: data.username, token: data.token });
             navigate('/');
           })
           .catch((error) => {
             if (error.response.status === 401) {
               setNetError(t('errors.401'));
             } else {
-              notify(t('errors.connectionError'));
+              notifyConnectionErr(t('errors.connectionError'));
             }
           })
           .finally(() => {

@@ -5,26 +5,24 @@ import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Formik } from 'formik';
 import { Form, Button } from 'react-bootstrap';
-import { toast } from 'react-toastify';
 import axios from 'axios';
 import cn from 'classnames';
-import route from '../../routes';
-import AuthorizationData from '../../contexts/AuthorizationData';
-import { validationSchemaSignUp } from '../../validationSchemas';
+import { notifyConnectionErr } from '../notify.jsx';
+import route from '../../routes.js';
+import AuthorizationContext from '../../contexts/AuthorizationContext.js';
+import { validationSchemaSignUp } from '../../validationSchemas.js';
 
 const SignUpForm = () => {
   const usernameInput = useRef(null);
   useEffect(() => {
     usernameInput.current.focus();
   }, []);
-  const { setAuthorizationData } = useContext(AuthorizationData);
   const [isDisabled, setIsDisabled] = useState(false);
   const [netError, setNetError] = useState(null);
   const navigate = useNavigate();
+  const { setAuthorizationData } = useContext(AuthorizationContext);
 
   const { t } = useTranslation();
-
-  const notify = (errorMessage) => toast.error(errorMessage);
 
   return (
     <Formik
@@ -39,10 +37,10 @@ const SignUpForm = () => {
         const loginRoute = route.signup();
         const loginData = { username, password };
         await axios.post(loginRoute, loginData)
-          .then((response) => {
-            localStorage.setItem('username', response.data.username);
-            localStorage.setItem('token', response.data.token);
-            setAuthorizationData({ token: response.data.token, username: response.data.username });
+          .then(({ data }) => {
+            localStorage.setItem('username', data.username);
+            localStorage.setItem('token', data.token);
+            setAuthorizationData({ username: data.username, token: data.token });
             setIsDisabled(false);
             navigate('/');
           })
@@ -51,7 +49,7 @@ const SignUpForm = () => {
               setNetError(t('errors.409'));
               setIsDisabled(false);
             } else {
-              notify(t('errors.connectionError'));
+              notifyConnectionErr(t('errors.connectionError'));
               setIsDisabled(false);
             }
           });

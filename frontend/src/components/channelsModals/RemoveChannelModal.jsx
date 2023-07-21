@@ -1,19 +1,16 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Modal, Button } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
-import { toast } from 'react-toastify';
-import SocketContext from '../../contexts/SocketContext.js';
+import { useRemoveChannel } from '../../hooks/socketHooks.js';
 import { actions as modalsActions } from '../../slices/modalsSlice.js';
+import { notifyConnectionErr } from '../notify.jsx';
 
 const RemoveChannelModal = () => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
 
-  const { removeChannel } = useContext(SocketContext);
-
-  const notifyOk = () => toast.success(t('toastifyNotify.channelRemoved'));
-  const notifyErr = () => toast.error(t('errors.connectionError'));
+  const removeChannel = useRemoveChannel();
 
   const isShow = useSelector((state) => state.modals.window) === 'removeChannel';
   const onHide = () => {
@@ -26,9 +23,8 @@ const RemoveChannelModal = () => {
     try {
       await removeChannel({ id });
       onHide();
-      notifyOk();
     } catch (e) {
-      notifyErr();
+      notifyConnectionErr(t('errors.connectionError'));
     }
   };
 

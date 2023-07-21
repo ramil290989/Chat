@@ -1,15 +1,14 @@
-import React, { useContext, useEffect, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { Formik } from 'formik';
-import { toast } from 'react-toastify';
 import filter from 'leo-profanity';
-import SocketContext from '../../contexts/SocketContext.js';
-import AuthorizationData from '../../contexts/AuthorizationData.js';
+import { notifyConnectionErr } from '../notify';
+import { useNewMessage } from '../../hooks/socketHooks';
 
 const MessageSendForm = () => {
-  const { authorizationData: { username } } = useContext(AuthorizationData);
-  const { newMessage } = useContext(SocketContext);
+  const username = localStorage.getItem('username');
+  const newMessage = useNewMessage();
 
   const messageInput = useRef(null);
   useEffect(() => {
@@ -19,8 +18,6 @@ const MessageSendForm = () => {
   const currentChannel = useSelector((state) => state.channels.currentChannel);
 
   const { t } = useTranslation();
-
-  const notifyErr = () => toast.error(t('errors.connectionError'));
 
   return (
     <div className="mt-auto px-5 py-3">
@@ -34,7 +31,7 @@ const MessageSendForm = () => {
             await newMessage({ body: messageBody, channelId: currentChannel.id, username });
             formikBag.resetForm();
           } catch (e) {
-            notifyErr();
+            notifyConnectionErr(t('errors.connectionError'));
           }
         }}
       >

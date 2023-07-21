@@ -1,13 +1,13 @@
-import React, { useContext, useEffect, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Formik } from 'formik';
 import { useSelector, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import { toast } from 'react-toastify';
 import cn from 'classnames';
 import { selectors as channelsSelectors, actions as channelsActions } from '../../slices/channelsSlice.js';
 import { actions as modalsActions } from '../../slices/modalsSlice.js';
-import SocketContext from '../../contexts/SocketContext.js';
+import { useNewChannel } from '../../hooks/socketHooks.js';
 import { validationSchemaChannelName } from '../../validationSchemas.js';
+import { notifyConnectionErr } from '../notify.jsx';
 
 const AddChannelForm = () => {
   const newChannelName = useRef(null);
@@ -18,20 +18,13 @@ const AddChannelForm = () => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
 
-  const { newChannel } = useContext(SocketContext);
+  const newChannel = useNewChannel();
 
   const channels = useSelector(channelsSelectors.selectAll);
   const channelNames = channels.map((channel) => channel.name);
 
   const onHide = () => {
     dispatch(modalsActions.modalHide());
-  };
-
-  const notifyOk = () => toast.success(t('toastifyNotify.channelAdded'));
-  const notifyErr = () => toast.error(t('errors.connectionError'));
-
-  const dispatchChangeCurrentChannel = (data) => {
-    dispatch(channelsActions.changeCurrentChannel(data));
   };
 
   return (
@@ -42,11 +35,10 @@ const AddChannelForm = () => {
       validationSchema={validationSchemaChannelName(channelNames, t)}
       onSubmit={async ({ name }) => {
         try {
-          await newChannel({ name }, dispatchChangeCurrentChannel);
+          await newChannel({ name });
           onHide();
-          notifyOk();
         } catch (e) {
-          notifyErr();
+          notifyConnectionErr(t('errors.connectionError'));
         }
       }}
     >

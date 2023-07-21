@@ -68,7 +68,7 @@ const ru = {
     },
     loadingStatus: {
       loading: 'Загрузка',
-      failed: 'Ошибка',
+      failed: 'Ошибка загрузки',
     },
     validations: {
       min3max20: 'От 3 до 20 символов',

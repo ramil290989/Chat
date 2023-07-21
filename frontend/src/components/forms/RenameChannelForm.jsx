@@ -1,10 +1,10 @@
-import React, { useContext, useEffect, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Formik } from 'formik';
 import cn from 'classnames';
 import { useTranslation } from 'react-i18next';
-import { toast } from 'react-toastify';
-import SocketContext from '../../contexts/SocketContext.js';
+import { notifyConnectionErr } from '../notify.jsx';
+import { useRenameChannel } from '../../hooks/socketHooks.js';
 import { validationSchemaChannelName } from '../../validationSchemas.js';
 import { selectors as channelsSelectors } from '../../slices/channelsSlice.js';
 import { actions as modalsActions } from '../../slices/modalsSlice.js';
@@ -18,7 +18,7 @@ const RenameChannelForm = () => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
 
-  const { renameChannel } = useContext(SocketContext);
+  const renameChannel = useRenameChannel();
 
   const channels = useSelector(channelsSelectors.selectAll);
   const channelNames = channels.map((channel) => channel.name);
@@ -28,9 +28,6 @@ const RenameChannelForm = () => {
   const onHide = () => {
     dispatch(modalsActions.modalHide());
   };
-
-  const notifyOk = () => toast.success(t('toastifyNotify.channelRenamed'));
-  const notifyErr = () => toast.error(t('errors.connectionError'));
 
   return (
     <Formik
@@ -42,9 +39,8 @@ const RenameChannelForm = () => {
         try {
           await renameChannel({ id, name });
           onHide();
-          notifyOk();
         } catch (e) {
-          notifyErr();
+          notifyConnectionErr(t('errors.connectionError'));
         }
       }}
     >

@@ -3,7 +3,7 @@ import { Provider } from 'react-redux';
 import { Provider as RollbarProvider, ErrorBoundary, LEVEL_WARN } from '@rollbar/react';
 import 'react-toastify/dist/ReactToastify.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import SocketProvider from './SocketProvider.jsx';
+import SocketProvider from './providers/SocketProvider.jsx';
 import initI18n from './initI18n.js';
 import initLeoProfanity from './initLeoProfanity.js';
 import rollbarConfig from './rollbarConfig.js';
